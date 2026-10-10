@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">منارة الجيل القرآني</string>
+    <string name="app_subtitle">منظومة متابعة حفظ ومراجعة القرآن الكريم</string>
+    <string name="welcome_message">مرحباً بكم في منصة منارة الجيل القرآني</string>
+    <string name="notification_channel_name">إشعارات أولياء الأمور ومنارة الجيل القرآني</string>
+    <string name="notification_channel_desc">إشعارات يومية لمتابعة إنجاز الحفظ والمراجعة والحضور</string>
+</resources>

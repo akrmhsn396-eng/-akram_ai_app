@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>منارة الجيل القرآني - متابعة الحفظ والحضور وبوابة ولي الأمر</title>
+    
+    <!-- ربط ملف الـ Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0F5132">
+
+    <!-- دعم أجهزة آبل (iOS / iPad / Safari) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="منارة الجيل القرآني">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+
+    <!-- تسجيل الـ Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('PWA Ready:', reg.scope))
+            .catch(err => console.log('PWA Register Failed:', err));
+        });
+      }
+    </script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0F5132;
+            --primary-dark: #093622;
+            --primary-light: #28A745;
+            --primary-container: #D1E7DD;
+            --gold: #C29B38;
+            --gold-light: #F0D58C;
+            --gold-container: #FFF3CD;
+            --bg: #F8F9FA;
+            --surface: #FFFFFF;
+            --text: #1B2E24;
+            --text-secondary: #566B60;
+            --border: #E0E6E2;
+            --radius: 16px;
+            --shadow: 0 4px 14px rgba(15, 81, 50, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 70px;
+        }
+
+        /* Top Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #ffffff;
+            padding: 18px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--primary-container);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+
+        .header-btn:hover {
+            background: var(--gold);
+            color: var(--primary-dark);
+        }
+
+        /* Install Banner */
+        .install-banner {
+            background: var(--gold-container);
+            color: #664D03;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gold);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .install-banner-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .btn-install {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 16px;
+        }
+
+        /* Nav Tabs */
+        .tabs {
+            display: flex;
+            background: var(--surface);
+            padding: 6px;
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            gap: 6px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 120px;
+            background: transparent;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Sections */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Search & Filters */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        .filter-chip {
+            padding: 10px 18px;
+            border-radius: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .filter-chip.active {
+            background: var(--primary-container);
+            color: var(--primary-dark);
+            border-color: var(--primary);
+        }
+
+        /* Student Cards */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .student-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.2s;
+        }
+
+        .student-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .student-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .student-avatar.male {
+            background: #E3F2FD;
+            color: #1976D2;
+        }
+
+        .student-avatar.female {
+            background: #FCE4EC;
+            color: #C2185B;
+        }
+
+        .student-info {
+            flex: 1;
+        }
+
+        .student-info h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .circle-name {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+
+        .badge.male { background: #E3F2FD; color: #1976D2; }
+        .badge.female { background: #FCE4EC; color: #C2185B; }
+
+        .att-status {
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 10px;
+        }
+
+        .att-status.present { background: #E8F5E9; color: #2E7D32; }
+        .att-status.late { background: #FFF3E0; color: #EF6C00; }
+        .att-status.excused { background: #E1F5FE; color: #0288D1; }
+        .att-status.absent { background: #FFEBEE; color: #C62828; }
+        .att-status.none { background: #F5F5F5; color: #757575; }
+
+        .student-body {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            border-top: 1px dashed var(--border);
+            padding-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .last-recitation {
+            background: var(--primary-container);
+            color: var(--primary-dark);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            flex: 1;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        .btn-outline:hover { background: var(--bg); }
+        .btn-secondary { background: var(--gold); color: #111; }
+        .btn-secondary:hover { background: var(--gold-light); }
+        .btn-whatsapp { background: #25D366; color: white; width: 100%; margin-top: 10px; padding: 12px; }
+
+        /* Parent Portal Box */
+        .portal-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .portal-search {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .parent-card {
+            background: #FAFAFA;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            margin-top: 16px;
+        }
+
+        .parent-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .notes {
+            background: var(--gold-container);
+            color: #664D03;
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 6px;
+            font-size: 0.85rem;
+        }
+
+        /* Toast */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--primary-dark);
+            color: #fff;
+            text-align: center;
+            border-radius: 10px;
+            padding: 14px;
+            position: fixed;
+            z-index: 1000;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+        }
+
+        .toast.show {
+            visibility: visible;
+            animation: fadein 0.4s, fadeout 0.4s 2.6s;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+        @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .header-content { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .header-actions { width: 100%; justify-content: flex-end; }
+            .students-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo-group">
+                <div class="logo-icon">📖</div>
+                <div class="logo-text">
+                    <h1>منارة الجيل القرآني</h1>
+                    <p>متابعة الحفظ والمراجعة والحضور وبوابة ولي الأمر</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="shareApp()">📲 مشاركة الرابط</button>
+                <button class="header-btn" id="installBtn">⬇️ تثبيت التطبيق</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Install PWA Banner -->
+    <div id="installBanner" class="install-banner" style="display: none;">
+        <div class="install-banner-text">
+            <span>📱</span>
+            <span>ثبّت التطبيق على هاتفك المحمول أو جهازك اللوحي للوصول السريع بدون إنترنت!</span>
+        </div>
+        <button class="btn-install" onclick="installApp()">تثبيت الآن</button>
+    </div>
+
+    <!-- Main App Container -->
+    <main class="container">
+        
+        <!-- Navigation Tabs -->
+        <nav class="tabs">
+            <button class="tab-btn active" onclick="switchTab('teacherTab')">👨‍🏫 لوحة المعلم</button>
+            <button class="tab-btn" onclick="switchTab('parentTab')">👨‍👩‍👧‍👦 بوابة ولي الأمر</button>
+            <button class="tab-btn" onclick="switchTab('studentTab')">🌟 مساحة الطالب</button>
+            <button class="tab-btn" onclick="switchTab('devTab')">🛠️ لوحة المطور والنشر</button>
+        </nav>
+
+        <!-- 1. Teacher Tab -->
+        <section id="teacherTab" class="tab-content active">
+            <div class="filter-bar">
+                <input type="text" id="searchInput" class="search-input" placeholder="ابحث باسم الطالب أو الحلقة أو كود ولي الأمر..." oninput="onSearchChange(this.value)">
+                <button class="filter-chip active" id="chipAll" onclick="filterByGender('ALL')">الكل</button>
+                <button class="filter-chip" id="chipMale" onclick="filterByGender('MALE')">بنين 👦</button>
+                <button class="filter-chip" id="chipFemale" onclick="filterByGender('FEMALE')">بنات 👧</button>
+            </div>
+
+            <div id="studentsList" class="students-grid">
+                <!-- Loaded from app.js -->
+            </div>
+        </section>
+
+        <!-- 2. Parent Tab -->
+        <section id="parentTab" class="tab-content">
+            <div class="portal-card">
+                <h2>بوابة ولي الأمر للمتابعة اليومية 👨‍👩‍👧‍👦</h2>
+                <p>أدخل رمز متابعة ابنك/ابنتك المعطى من المعلم لمعرفة تقرير الحفظ اليومي، الحضور والغياب، وملاحظات الحلقة:</p>
+                
+                <div class="portal-search">
+                    <input type="text" id="parentCodeInput" class="search-input" placeholder="مثال: QRN-101" value="QRN-101">
+                    <button class="btn btn-primary" onclick="searchParentPortal()">عرض التقرير اليومي</button>
+                </div>
+
+                <div id="parentResult"></div>
+            </div>
+        </section>
+
+        <!-- 3. Student Tab -->
+        <section id="studentTab" class="tab-content">
+            <div class="portal-card" style="background: linear-gradient(135deg, #0F5132, #18241D); color: white;">
+                <h2 style="color: var(--gold-light);">مسار الختمة القرآنية والأوسمة 🏆</h2>
+                <p style="color: var(--primary-container);">تحفيز طلاب وطالبات حلقات القرآن الكريم على إتمام الحفظ والمراجعة ونيل الجوائز</p>
+                <div style="display: flex; gap: 14px; margin-top: 16px; flex-wrap: wrap;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 12px 18px; border-radius: 12px; flex: 1;">
+                        <h3 style="color: var(--gold);">🥇 وسام حافظ الأسبوع</h3>
+                        <p style="font-size: 0.85rem;">يمنح للطالب الأكثر إتقاناً للتسميع اليومي</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 12px 18px; border-radius: 12px; flex: 1;">
+                        <h3 style="color: var(--gold);">🌟 وسام نجم التجويد</h3>
+                        <p style="font-size: 0.85rem;">يمنح لدرجات التجويد الكاملة 10/10</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 12px 18px; border-radius: 12px; flex: 1;">
+                        <h3 style="color: var(--gold);">🔥 وسام المواظب الذهبي</h3>
+                        <p style="font-size: 0.85rem;">للحضور المستمر بدون أي غياب</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Developer & Distribution Tab -->
+        <section id="devTab" class="tab-content">
+            <div class="portal-card">
+                <h2>لوحة تحكم المطور والنشر الشامل 📱💻</h2>
+                <p>أدوات التحكم بالمنظومة ومشاركة وتثبيت التطبيق على كافة أنواع الهواتف الذكية والأجهزة اللوحية:</p>
+                
+                <div style="background: var(--primary-container); color: var(--primary-dark); padding: 16px; border-radius: 12px; margin-top: 14px;">
+                    <h4>📲 رابط المشاركة والتثبيت المباشر:</h4>
+                    <p style="font-weight: 700; word-break: break-all;">https://quran-circles.app/install</p>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button class="btn btn-primary" onclick="shareApp()">مشاركة الرابط العام</button>
+                        <button class="btn btn-outline" onclick="copyInstallLink()">نسخ الرابط</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <h4>📌 خطوات تثبيت التطبيق على الأجهزة الذكية:</h4>
+                    <ul style="padding-right: 20px; margin-top: 8px; font-size: 0.9rem; color: var(--text-secondary);">
+                        <li><strong>هواتف Android والأجهزة اللوحية:</strong> افتح الرابط في Chrome واضغط زر (تثبيت التطبيق) أو القائمة ثم "إضافة إلى الشاشة الرئيسية".</li>
+                        <li><strong>هواتف iPhone وأجهزة iPad:</strong> افتح الرابط في متصفح Safari، ثم اضغط زر المشاركة (Share) ثم "إضافة إلى الصفحة الرئيسية (Add to Home Screen)".</li>
+                        <li><strong>أجهزة الكمبيوتر والشاشات الذكية:</strong> اضغط على أيقونة التثبيت في شريط العنوان بالمتصفح.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+    <script>
+        const ACTIVE_TAB_STORAGE_KEY = 'activeTab';
+
+        function switchTab(tabId, savePreference = true) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
+
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => {
+                const attr = b.getAttribute('onclick');
+                return attr && attr.includes(tabId);
+            });
+            if (activeBtn) activeBtn.classList.add('active');
+
+            if (savePreference) {
+                try {
+                    localStorage.setItem(ACTIVE_TAB_STORAGE_KEY, tabId);
+                } catch (e) {
+                    console.warn('تعذر حفظ التبويب النشط في localStorage:', e);
+                }
+            }
+
+            if (tabId === 'parentTab') {
+                searchParentPortal();
+            }
+        }
+
+        function restoreActiveTab() {
+            try {
+                const savedTab = localStorage.getItem(ACTIVE_TAB_STORAGE_KEY) || localStorage.getItem('active_tab');
+                const validTabs = ['teacherTab', 'parentTab', 'studentTab', 'devTab'];
+                if (savedTab && validTabs.includes(savedTab) && document.getElementById(savedTab)) {
+                    switchTab(savedTab, false);
+                }
+            } catch (e) {
+                console.warn('تعذر استرجاع التبويب في localStorage:', e);
+            }
+        }
+
+        // استعادة التبويب النشط عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            restoreActiveTab();
+        });
+        if (document.readyState === 'interactive' || document.readyState === 'complete') {
+            restoreActiveTab();
+        }
+
+        let currentGender = 'ALL';
+        let currentSearch = '';
+
+        function filterByGender(gender) {
+            currentGender = gender;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            if (gender === 'ALL') document.getElementById('chipAll').classList.add('active');
+            if (gender === 'MALE') document.getElementById('chipMale').classList.add('active');
+            if (gender === 'FEMALE') document.getElementById('chipFemale').classList.add('active');
+            renderStudents(currentGender, currentSearch);
+        }
+
+        function onSearchChange(val) {
+            currentSearch = val;
+            renderStudents(currentGender, currentSearch);
+        }
+
+        function copyInstallLink() {
+            navigator.clipboard.writeText("https://quran-circles.app/install");
+            showToast("تم نسخ رابط تثبيت التطبيق بنجاح!");
+        }
+
+        function openRecitationModal(studentId) {
+            const student = quranData.students.find(s => s.id === studentId);
+            if (!student) return;
+            const surah = prompt("أدخل اسم السورة الكريمة للتسميع:", "الملك");
+            if (!surah) return;
+            const fromAyah = prompt("من آية رقم:", "1") || "1";
+            const toAyah = prompt("إلى آية رقم:", "15") || "15";
+            const rating = prompt("التقدير (ممتاز / جيد جداً / جيد):", "ممتاز 🌟") || "ممتاز 🌟";
+            
+            quranData.recitations.unshift({
+                studentId: student.id,
+                studentName: student.name,
+                type: "حفظ جديد",
+                surah: surah,
+                fromAyah: parseInt(fromAyah),
+                toAyah: parseInt(toAyah),
+                rating: rating,
+                tajweed: 10,
+                fluency: 10,
+                notes: "تم التسميع بنجاح في الحلقة المباركة.",
+                date: new Date().toISOString().split('T')[0]
+            });
+            student.points += 20;
+            student.streak += 1;
+            renderStudents(currentGender, currentSearch);
+            showToast(`تم حفظ تسميع الطالب ${student.name} وإشعار ولي الأمر! ⭐`);
+        }
+
+        // تسجيل Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('Service Worker registered successfully:', reg.scope))
+                    .catch((err) => console.log('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>

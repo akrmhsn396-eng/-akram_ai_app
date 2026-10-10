@@ -1,0 +1,6 @@
+{
+  "name": "منارة الجيل القرآني",
+  "description": "منظومة منارة الجيل القرآني لمتابعة طلاب وطالبات حلقات القرآن الكريم، الحفظ والمراجعة، الحضور والغياب، بوابة ولي الأمر ولوحة تحكم المطور.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
