@@ -229,4 +229,210 @@ function showToast(msg) {
 // تهيئة الصفحة عند التحميل
 document.addEventListener('DOMContentLoaded', () => {
     renderStudents();
+    if (window.renderHalaqat) renderHalaqat();
+    if (window.renderQuickAttendance) renderQuickAttendance();
 });
+
+// دوال إدارة الحلقات القرآنية
+function renderHalaqat() {
+    const container = document.getElementById('halaqatList');
+    if (!container) return;
+    
+    const circles = {};
+    quranData.students.forEach(s => {
+        if (!circles[s.circle]) {
+            circles[s.circle] = {
+                name: s.circle,
+                gender: s.gender,
+                students: []
+            };
+        }
+        circles[s.circle].students.push(s);
+    });
+
+    container.innerHTML = '';
+    Object.values(circles).forEach(circle => {
+        const presentCount = circle.students.filter(s => quranData.attendance[s.id] === 'PRESENT').length;
+        const total = circle.students.length;
+        const rate = total > 0 ? Math.round((presentCount / total) * 100) : 0;
+
+        const card = document.createElement('div');
+        card.style.cssText = 'background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px;';
+        card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="font-size: 1rem; font-weight: 700;">${circle.name}</h3>
+                <span class="badge ${circle.gender.toLowerCase()}">${circle.gender === 'MALE' ? 'بنين 👦' : 'بنات 👧'}</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">👥 عدد الطلاب: <strong>${total}</strong> | الحضور اليوم: <strong>${presentCount} (${rate}%)</strong></p>
+            <div style="background: var(--primary-container); height: 6px; border-radius: 3px; overflow: hidden;">
+                <div style="background: var(--primary); height: 100%; width: ${rate}%;"></div>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: auto;">
+                <button class="btn btn-primary" onclick="switchTab('quickAttTab')">⚡ التحضير السريع</button>
+                <button class="btn btn-outline" onclick="openAddStudentPrompt('${circle.name}')">➕ إضافة طالب</button>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function openAddCirclePrompt() {
+    const name = prompt("أدخل اسم الحلقة الجديدة (مثال: حلقة الإمام ورش):");
+    if (!name || !name.trim()) return;
+    const gender = confirm("هل الحلقة خاصة بالبنين؟ (اضغط OK للبنين، أو Cancel للبنات)") ? "MALE" : "FEMALE";
+    
+    const newId = quranData.students.length + 1;
+    quranData.students.push({
+        id: newId,
+        name: gender === "MALE" ? "طالب جديد" : "طالبة جديدة",
+        gender: gender,
+        circle: name.trim(),
+        code: `QRN-10${newId}`,
+        phone: "0500000000",
+        juz: 30,
+        points: 100,
+        streak: 1,
+        goal: "حفظ القرآن الكريم"
+    });
+    renderHalaqat();
+    renderStudents();
+    showToast(`تم إنشاء الحلقة المباركة: ${name} بنجاح 🕌`);
+}
+
+function openAddStudentPrompt(circleName) {
+    const name = prompt(`أدخل اسم الطالب الجديد في ${circleName}:`);
+    if (!name || !name.trim()) return;
+    const newId = quranData.students.length + 1;
+    quranData.students.push({
+        id: newId,
+        name: name.trim(),
+        gender: "MALE",
+        circle: circleName,
+        code: `QRN-10${newId}`,
+        phone: "0500000000",
+        juz: 30,
+        points: 100,
+        streak: 1,
+        goal: "حفظ جزء عم"
+    });
+    renderHalaqat();
+    renderStudents();
+    showToast(`تمت إضافة الطالب ${name} إلى ${circleName} ✅`);
+}
+
+// دوال التحضير السريع
+function renderQuickAttendance() {
+    const statsContainer = document.getElementById('quickAttendanceStats');
+    const listContainer = document.getElementById('quickAttendanceList');
+    if (!listContainer) return;
+
+    let present = 0, late = 0, excused = 0, absent = 0, none = 0;
+    quranData.students.forEach(s => {
+        const att = quranData.attendance[s.id] || 'NONE';
+        if (att === 'PRESENT') present++;
+        else if (att === 'LATE') late++;
+        else if (att === 'EXCUSED') excused++;
+        else if (att === 'ABSENT') absent++;
+        else none++;
+    });
+
+    if (statsContainer) {
+        statsContainer.innerHTML = `
+            <div style="background: #E8F5E9; color: #2E7D32; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem;">حاضر: ${present} ✅</div>
+            <div style="background: #FFF3E0; color: #EF6C00; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem;">متأخر: ${late} ⏰</div>
+            <div style="background: #E1F5FE; color: #0288D1; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem;">مستأذن: ${excused} ℹ️</div>
+            <div style="background: #FFEBEE; color: #C62828; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem;">غائب: ${absent} ❌</div>
+            <div style="background: #F5F5F5; color: #757575; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem;">لم يرصد: ${none}</div>
+        `;
+    }
+
+    listContainer.innerHTML = '';
+    quranData.students.forEach(student => {
+        const attStatus = quranData.attendance[student.id] || "NONE";
+        const attLabel = getAttendanceLabel(attStatus);
+        
+        const card = document.createElement('div');
+        card.className = 'student-card';
+        card.innerHTML = `
+            <div class="student-header">
+                <div class="student-avatar ${student.gender.toLowerCase()}">${student.name.charAt(0)}</div>
+                <div class="student-info">
+                    <h4>${student.name}</h4>
+                    <p class="circle-name">${student.circle} • كود: <strong>${student.code}</strong></p>
+                </div>
+                <button class="att-status ${attStatus.toLowerCase()}" style="border: none; cursor: pointer;" onclick="toggleAttendanceQuick(${student.id})">${attLabel}</button>
+            </div>
+        `;
+        listContainer.appendChild(card);
+    });
+}
+
+function toggleAttendanceQuick(studentId) {
+    toggleAttendance(studentId);
+    renderQuickAttendance();
+}
+
+function markAllPresentWeb() {
+    quranData.students.forEach(s => {
+        quranData.attendance[s.id] = 'PRESENT';
+    });
+    renderStudents();
+    renderQuickAttendance();
+    showToast("تم تحضير جميع الطلاب كـ حاضر بنجاح ✅");
+}
+
+function shareAbsentReportWeb() {
+    const absents = quranData.students.filter(s => quranData.attendance[s.id] === 'ABSENT');
+    if (absents.length === 0) {
+        showToast("لا يوجد طلاب غائبون اليوم 🎉");
+        return;
+    }
+    const text = `📋 تقرير غياب الطلاب اليوم:\n` + absents.map((s, i) => `${i+1}. ${s.name} (${s.circle})`).join('\n') + `\nيرجى التواصل مع الإدارة للإفادة بالعذر.`;
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+}
+
+// دوال الرسائل
+function sendBroadcastWeb() {
+    const title = document.getElementById('webMsgTitle').value;
+    const body = document.getElementById('webMsgBody').value;
+    showToast(`تم إرسال الإشعار لـ ${quranData.students.length} من أولياء الأمور بنجاح 🔔`);
+}
+
+function shareMsgWhatsAppWeb() {
+    const title = document.getElementById('webMsgTitle').value;
+    const body = document.getElementById('webMsgBody').value;
+    const text = `🌿 *${title}* 🌿\n\n${body}\n\n━━━━━━━━━━━━━━━\n📲 تطبيق منارة الجيل القرآني`;
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+}
+
+// دوال الأدوات والشهادات والتحدي
+function openCertificateModal(studentId) {
+    const student = quranData.students.find(s => s.id === studentId) || quranData.students[0];
+    const certText = `📜 *شهادة تميّز وإنجاز قرآني* 📜\nتشهد إدارة حلقات القرآن الكريم بأن ${student.name} من ${student.circle} قد أتم/ت حفظ جزء عم والمواظبة على الحضور بتقدير ممتاز 🌟. بارك الله في حفظه وثبته!`;
+    if (navigator.share) {
+        navigator.share({ title: `شهادة تقدير ${student.name}`, text: certText }).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(certText);
+        showToast(`تم نسخ شهادة التقدير للطالب ${student.name} للمشاركة 📜`);
+    }
+}
+
+function openDailyChallengeModal() {
+    const answer = prompt("سؤال اليوم:\nما هي السورة الملقبة بـ (عروس القرآن)؟\n1) سورة يس\n2) سورة الرحمن\n3) سورة الملك", "2");
+    if (answer === "2" || (answer && answer.includes("الرحمن"))) {
+        const student = quranData.students[0];
+        student.points += 25;
+        showToast("إجابة صحيحة وممتازة! 🌟 تمت إضافة 25 نقطة لرصيدك!");
+        renderStudents();
+    } else if (answer) {
+        showToast("إجابة غير صحيحة، حاول غداً في التحدي القادم!");
+    }
+}
+
+function shareFullReportWeb() {
+    const text = `📊 تقرير متابعة الحلقات الشامل:\nإجمالي الطلاب: ${quranData.students.length}\n` + quranData.students.map(s => `• ${s.name} - ${s.circle} (نقاط: ${s.points})`).join('\n') + `\nمنظومة منارة الجيل القرآني`;
+    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+}

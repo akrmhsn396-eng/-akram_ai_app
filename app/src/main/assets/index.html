@@ -501,9 +501,13 @@
         <!-- Navigation Tabs -->
         <nav class="tabs">
             <button class="tab-btn active" onclick="switchTab('teacherTab')">👨‍🏫 لوحة المعلم</button>
+            <button class="tab-btn" onclick="switchTab('halaqatTab')">🕌 الحلقات القرآنية</button>
+            <button class="tab-btn" onclick="switchTab('quickAttTab')">⚡ التحضير السريع</button>
             <button class="tab-btn" onclick="switchTab('parentTab')">👨‍👩‍👧‍👦 بوابة ولي الأمر</button>
             <button class="tab-btn" onclick="switchTab('studentTab')">🌟 مساحة الطالب</button>
-            <button class="tab-btn" onclick="switchTab('devTab')">🛠️ لوحة المطور والنشر</button>
+            <button class="tab-btn" onclick="switchTab('messagesTab')">💬 الرسائل والتنبيهات</button>
+            <button class="tab-btn" onclick="switchTab('toolsTab')">🛠️ الأدوات والشهادات</button>
+            <button class="tab-btn" onclick="switchTab('devTab')">📱 المطور والنشر</button>
         </nav>
 
         <!-- 1. Teacher Tab -->
@@ -517,6 +521,42 @@
 
             <div id="studentsList" class="students-grid">
                 <!-- Loaded from app.js -->
+            </div>
+        </section>
+
+        <!-- 2. Halaqat Tab -->
+        <section id="halaqatTab" class="tab-content">
+            <div class="portal-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h2>إدارة الحلقات القرآنية 🕌</h2>
+                        <p>توزيع الطلاب، مواعيد الحلقات، ونسب الحضور والإنجاز لكل حلقة:</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openAddCirclePrompt()">➕ إضافة حلقة جديدة</button>
+                </div>
+                <div id="halaqatList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 16px;">
+                    <!-- Rendered by app.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Quick Attendance Tab -->
+        <section id="quickAttTab" class="tab-content">
+            <div class="portal-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h2>التحضير السريع اليومي ⚡</h2>
+                        <p>رصد حضور وغياب جميع الطلاب بنقرة واحدة سريعة:</p>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-primary" onclick="markAllPresentWeb()">✅ تحضير الكل حاضر</button>
+                        <button class="btn btn-outline" onclick="shareAbsentReportWeb()">📲 تقرير الغياب</button>
+                    </div>
+                </div>
+                <div id="quickAttendanceStats" style="display: flex; gap: 8px; margin: 14px 0; flex-wrap: wrap;"></div>
+                <div id="quickAttendanceList" class="students-grid">
+                    <!-- Rendered by app.js -->
+                </div>
             </div>
         </section>
 
@@ -552,6 +592,47 @@
                     <div style="background: rgba(255,255,255,0.1); padding: 12px 18px; border-radius: 12px; flex: 1;">
                         <h3 style="color: var(--gold);">🔥 وسام المواظب الذهبي</h3>
                         <p style="font-size: 0.85rem;">للحضور المستمر بدون أي غياب</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Messages Tab -->
+        <section id="messagesTab" class="tab-content">
+            <div class="portal-card">
+                <h2>مركز الرسائل والتواصل مع أولياء الأمور 💬</h2>
+                <p>إرسال تنبيهات الغياب، إشعارات التسميع، ورسائل التكريم والأنشطة:</p>
+                <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 10px;">
+                    <input type="text" id="webMsgTitle" class="search-input" placeholder="عنوان الرسالة (مثال: تنبيه غياب / إشادة بالحفظ)" value="تنبيه بموعد المراجعة اليومي">
+                    <textarea id="webMsgBody" class="search-input" style="min-height: 80px; resize: vertical;" placeholder="نص الرسالة المرسلة لولي الأمر...">السلام عليكم ورحمة الله، نرجو من ولي الأمر الكريم متابعة ورد مراجعة القرآن اليومي لضمان ثبات الحفظ والتقدم في الحلقة.</textarea>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-primary" onclick="sendBroadcastWeb()">🔔 إرسال الإشعار لجميع الحلقات</button>
+                        <button class="btn btn-whatsapp" style="margin-top:0;" onclick="shareMsgWhatsAppWeb()">📲 مشاركة عبر واتساب</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Tools & Certificates Tab -->
+        <section id="toolsTab" class="tab-content">
+            <div class="portal-card">
+                <h2>الأدوات والشهادات الذكية 🛠️📜</h2>
+                <p>إصدار شهادات التقدير، التحدي القرآني اليومي، وتقارير الحلقات:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 14px;">
+                    <div style="background: #FAFAFA; border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+                        <h3>🎓 شهادات التقدير والإنجاز</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 6px 0;">توليد شهادات مخصصة لطلاب الحلقات المتميزين:</p>
+                        <button class="btn btn-secondary" style="width: 100%;" onclick="openCertificateModal(1)">📜 إصدار شهادة تفوق</button>
+                    </div>
+                    <div style="background: #FAFAFA; border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+                        <h3>🏆 التحدي القرآني اليومي</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 6px 0;">سؤال اليوم في علوم القرآن والتجويد (+25 نقطة):</p>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="openDailyChallengeModal()">🌟 بدء التحدي اليومي</button>
+                    </div>
+                    <div style="background: #FAFAFA; border: 1px solid var(--border); border-radius: 12px; padding: 16px;">
+                        <h3>📊 تقرير المتابعة الشامل</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 6px 0;">تصدير سجلات الحفظ والغياب لجميع الطلاب:</p>
+                        <button class="btn btn-outline" style="width: 100%;" onclick="shareFullReportWeb()">📲 مشاركة التقرير الكامل</button>
                     </div>
                 </div>
             </div>
@@ -615,13 +696,17 @@
 
             if (tabId === 'parentTab') {
                 searchParentPortal();
+            } else if (tabId === 'halaqatTab') {
+                if (window.renderHalaqat) renderHalaqat();
+            } else if (tabId === 'quickAttTab') {
+                if (window.renderQuickAttendance) renderQuickAttendance();
             }
         }
 
         function restoreActiveTab() {
             try {
                 const savedTab = localStorage.getItem(ACTIVE_TAB_STORAGE_KEY) || localStorage.getItem('active_tab');
-                const validTabs = ['teacherTab', 'parentTab', 'studentTab', 'devTab'];
+                const validTabs = ['teacherTab', 'halaqatTab', 'quickAttTab', 'parentTab', 'studentTab', 'messagesTab', 'toolsTab', 'devTab'];
                 if (savedTab && validTabs.includes(savedTab) && document.getElementById(savedTab)) {
                     switchTab(savedTab, false);
                 }

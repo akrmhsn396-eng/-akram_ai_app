@@ -139,8 +139,12 @@ fun AppTopBar(
                 val isSelected = currentRole == role
                 val icon = when (role) {
                     AppRole.TEACHER -> Icons.Default.School
+                    AppRole.HALAQAT -> Icons.Default.Groups
+                    AppRole.QUICK_ATTENDANCE -> Icons.Default.FactCheck
                     AppRole.PARENT -> Icons.Default.FamilyRestroom
                     AppRole.STUDENT -> Icons.Default.EmojiEvents
+                    AppRole.MESSAGES -> Icons.Default.Chat
+                    AppRole.TOOLS -> Icons.Default.Handyman
                     AppRole.DEVELOPER -> Icons.Default.AdminPanelSettings
                 }
 

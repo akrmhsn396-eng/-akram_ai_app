@@ -22,10 +22,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ui.components.AppTopBar
+import com.example.ui.screens.attendance.QuickAttendanceScreen
 import com.example.ui.screens.developer.DeveloperScreen
+import com.example.ui.screens.halaqat.HalaqatScreen
+import com.example.ui.screens.messages.MessagesScreen
 import com.example.ui.screens.parent.ParentScreen
 import com.example.ui.screens.student.StudentScreen
 import com.example.ui.screens.teacher.TeacherScreen
+import com.example.ui.screens.tools.ToolsScreen
 import com.example.ui.theme.MyApplicationTheme
 import com.example.util.NotificationHelper
 import com.example.viewmodel.AppRole
@@ -116,8 +120,12 @@ fun QuranCirclesApp(
             ) { role ->
                 when (role) {
                     AppRole.TEACHER -> TeacherScreen(viewModel = viewModel)
+                    AppRole.HALAQAT -> HalaqatScreen(viewModel = viewModel)
+                    AppRole.QUICK_ATTENDANCE -> QuickAttendanceScreen(viewModel = viewModel)
                     AppRole.PARENT -> ParentScreen(viewModel = viewModel)
                     AppRole.STUDENT -> StudentScreen(viewModel = viewModel)
+                    AppRole.MESSAGES -> MessagesScreen(viewModel = viewModel)
+                    AppRole.TOOLS -> ToolsScreen(viewModel = viewModel)
                     AppRole.DEVELOPER -> DeveloperScreen(viewModel = viewModel)
                 }
             }

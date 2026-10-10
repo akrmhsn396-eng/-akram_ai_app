@@ -15,10 +15,14 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 enum class AppRole(val titleAr: String, val iconDesc: String) {
-    TEACHER("المعلم / المحفّظ", "إدارة الحفظ والغياب والتقييم"),
-    PARENT("بوابة ولي الأمر", "متابعة إنجاز الأبناء يومياً"),
-    STUDENT("مساحة الطالب", "الختمة والنقاط والأوسمة"),
-    DEVELOPER("لوحة المطور والإدارة", "التحكم الكامل والأدوات والتحديثات")
+    TEACHER("لوحة المعلم", "إدارة الحفظ والتقييم ومتابعة الطلاب"),
+    HALAQAT("الحلقات القرآنية", "إدارة وتوزيع الحلقات والمجموعات"),
+    QUICK_ATTENDANCE("التحضير السريع", "رصد الحضور بنقرة واحدة لجميع الطلاب"),
+    PARENT("بوابة ولي الأمر", "متابعة إنجاز الأبناء والتقارير المباشرة"),
+    STUDENT("مساحة الطالب", "الختمة والنقاط والأوسمة والتحديات"),
+    MESSAGES("الرسائل والتواصل", "إرسال التنبيهات ورسائل أولياء الأمور"),
+    TOOLS("الأدوات والشهادات", "الشهادات، التحدي اليومي، تقارير PDF، المساعد الصوتي"),
+    DEVELOPER("المطور والنشر", "إدارة النظام والنسخ الاحتياطي وأدوات التثبيت")
 }
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -250,6 +254,71 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 )
             }
             showSnackbar("تم رصد الحضور لجميع طلاب $circleName كـ ${status.labelAr}")
+        }
+    }
+
+    fun markAllStudentsPresent() {
+        viewModelScope.launch {
+            val today = currentDate.value
+            allStudents.value.forEach { s ->
+                attendanceDao.insertOrUpdate(
+                    AttendanceRecord(
+                        studentId = s.id,
+                        dateStr = today,
+                        status = AttendanceStatus.PRESENT
+                    )
+                )
+            }
+            showSnackbar("تم تحضير جميع الطلاب كـ حاضر بنجاح ✅")
+        }
+    }
+
+    fun toggleAttendanceForStudent(studentId: Long) {
+        viewModelScope.launch {
+            val today = currentDate.value
+            val currentRecord = todayAttendance.value.firstOrNull { it.studentId == studentId }
+            val nextStatus = when (currentRecord?.status) {
+                AttendanceStatus.PRESENT -> AttendanceStatus.LATE
+                AttendanceStatus.LATE -> AttendanceStatus.EXCUSED
+                AttendanceStatus.EXCUSED -> AttendanceStatus.ABSENT
+                AttendanceStatus.ABSENT -> AttendanceStatus.PRESENT
+                null -> AttendanceStatus.PRESENT
+            }
+            setAttendance(studentId, nextStatus)
+        }
+    }
+
+    fun sendMessageToCircle(circleName: String?, title: String, message: String, category: String = "رسالة عامة") {
+        viewModelScope.launch {
+            val today = currentDate.value
+            val targets = if (circleName == null || circleName == "الكل") allStudents.value else allStudents.value.filter { it.circleName == circleName }
+            targets.forEach { s ->
+                notificationDao.insert(
+                    ParentNotification(
+                        studentId = s.id,
+                        studentName = s.name,
+                        title = title,
+                        message = message,
+                        dateStr = today,
+                        category = category
+                    )
+                )
+            }
+            NotificationHelper.showParentNotification(
+                getApplication(),
+                notificationId = (System.currentTimeMillis() % 10000).toInt(),
+                title = title,
+                message = message,
+                subText = if (circleName != null && circleName != "الكل") circleName else "إشعار عام"
+            )
+            showSnackbar("تم إرسال الرسالة لـ ${targets.size} من أولياء الأمور بنجاح ✉️")
+        }
+    }
+
+    fun awardChallengePoints(studentId: Long, points: Int) {
+        viewModelScope.launch {
+            studentDao.awardPoints(studentId, points)
+            showSnackbar("أحسنت! تمت إضافة $points نقطة لرصيد الطالب في التحدي اليومي 🌟")
         }
     }
 
