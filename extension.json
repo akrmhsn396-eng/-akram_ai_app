@@ -1,0 +1,20 @@
+{
+  "name": "حلقات هائل سعيد أنعم",
+  "version": "1.0.0",
+  "description": "منظومة حلقات القرآن الكريم ومتابعة الحفظ والحضور وبوابة ولي الأمر",
+  "entry": "index.html",
+  "permissions": [
+    "internet",
+    "notifications",
+    "storage",
+    "background_sync"
+  ],
+  "pwa": {
+    "manifest": "manifest.json",
+    "service_worker": "sw.js"
+  },
+  "cloud": {
+    "fcm_channel": "quran_episodes_channel",
+    "server_url": "https://ais-pre-lcyvlje5mim4gidc2stpib-425685275819.europe-west2.run.app"
+  }
+}
