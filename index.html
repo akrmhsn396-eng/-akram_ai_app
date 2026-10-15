@@ -459,11 +459,424 @@
         @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } }
         @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
 
+        /* Modals & Dialogs */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.65);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 16px;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-box {
+            background: var(--surface);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+            border: 1px solid var(--border);
+            animation: fadeIn 0.25s ease-out;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+        .modal-close-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .modal-close-btn:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .form-group label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+        .form-control {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #C2185B;
+            box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.15);
+        }
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Association & Department Switcher Bar */
+        .org-selector-bar {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 18px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--gold);
+        }
+        .org-switch-group, .role-switch-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .org-label, .role-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+        .org-btn {
+            padding: 7px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .org-btn:hover {
+            border-color: var(--primary);
+        }
+        .org-btn.active.hael {
+            background: #0F5132;
+            color: #ffffff;
+            border-color: #0F5132;
+            box-shadow: 0 2px 8px rgba(15, 81, 50, 0.25);
+        }
+        .org-btn.active.muadh {
+            background: #1A5276;
+            color: #ffffff;
+            border-color: #1A5276;
+            box-shadow: 0 2px 8px rgba(26, 82, 118, 0.25);
+        }
+        .isolation-badge {
+            background: #E8F5E9;
+            color: #2E7D32;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid #A5D6A7;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .role-select {
+            padding: 7px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Readers Level & Assessment Styles */
+        .assessment-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        .level-meter-box {
+            background: linear-gradient(135deg, #0F5132, #093622);
+            color: white;
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+            margin: 16px 0;
+            border: 1px solid var(--gold);
+        }
+        .level-badge-large {
+            display: inline-block;
+            background: var(--gold);
+            color: #093622;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-top: 8px;
+        }
+        .rubric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .rubric-item {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+        }
+        .rubric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .rubric-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .rubric-value {
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .rubric-slider {
+            width: 100%;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+        .reciter-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .reciter-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        .reciter-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .reciter-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gold-container);
+            color: #664D03;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid var(--gold);
+        }
+        .audio-player-bar {
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* Qira'at Styles */
+        .qiraat-hero {
+            background: linear-gradient(135deg, #18241D, #0F5132);
+            color: white;
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--gold);
+        }
+        .qiraat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            border-right: 4px solid var(--gold);
+            transition: all 0.2s;
+        }
+        .qiraat-card:hover {
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        }
+        .narrator-badge {
+            background: #E8F5E9;
+            color: #1B5E20;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            display: inline-block;
+            margin: 4px 2px;
+        }
+        .madhab-chip {
+            background: var(--gold-container);
+            color: #664D03;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .fiqh-compare-card {
+            background: #FAFAFA;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 12px;
+        }
+
+        /* Secure Login Gateway Styles */
+        .secure-gate-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.96), rgba(9, 54, 34, 0.98));
+            z-index: 3000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .secure-gate-box {
+            background: var(--surface);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 540px;
+            padding: 28px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+            border: 2px solid var(--gold);
+            animation: fadeIn 0.3s ease;
+        }
+        .secure-badge-hdr {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--gold-container);
+            color: #664D03;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+        .gate-org-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            font-weight: 800;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .gate-org-btn.active.hael {
+            background: #E8F5E9;
+            border-color: #0F5132;
+            color: #0F5132;
+            box-shadow: 0 4px 12px rgba(15, 81, 50, 0.15);
+        }
+        .gate-org-btn.active.muadh {
+            background: #E1F5FE;
+            border-color: #1A5276;
+            color: #1A5276;
+            box-shadow: 0 4px 12px rgba(26, 82, 118, 0.15);
+        }
+        .gate-role-btn {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .gate-role-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .security-alert-box {
+            background: #FFEBEE;
+            border: 1px solid #FFCDD2;
+            color: #C62828;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 12px;
+            display: none;
+            animation: fadeIn 0.2s;
+        }
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+        .audit-table th, .audit-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border);
+            text-align: right;
+        }
+        .audit-table th {
+            background: var(--bg);
+            font-weight: 700;
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .header-content { flex-direction: column; align-items: flex-start; gap: 12px; }
             .header-actions { width: 100%; justify-content: flex-end; }
             .students-grid { grid-template-columns: 1fr; }
+            .org-selector-bar { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
@@ -476,15 +889,129 @@
                 <div class="logo-icon">📖</div>
                 <div class="logo-text">
                     <h1>منارة الجيل القرآني</h1>
-                    <p>متابعة الحفظ والمراجعة والحضور وبوابة ولي الأمر</p>
+                    <p id="headerSessionStatus">🔒 جلسة آمنة - نظام عزل الجمعيتين وتدقيق المعلومات</p>
                 </div>
             </div>
             <div class="header-actions">
+                <button class="header-btn" style="background: rgba(255,255,255,0.18);" onclick="openSecurityAuditModal()">🛡️ تدقيق الأمان</button>
+                <button class="header-btn" style="background: rgba(212, 175, 55, 0.35); color: #FFF8E1;" onclick="openGateSwitchModal()">🔑 تبديل الحساب / الكود</button>
+                <button class="header-btn" style="background: #C62828; color: white;" onclick="promptSecureLogout()">🚪 خروج وقفل</button>
                 <button class="header-btn" onclick="shareApp()">📲 مشاركة الرابط</button>
                 <button class="header-btn" id="installBtn">⬇️ تثبيت التطبيق</button>
             </div>
         </div>
     </header>
+
+    <!-- 🔐 Secure Login & Authorization Gate -->
+    <div id="secureLoginGate" class="secure-gate-overlay" style="display: none;">
+        <div class="secure-gate-box">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div class="secure-badge-hdr">🔒 نظام التحقق الأمني والعزل التام للبيانات</div>
+                <h2 style="color: var(--primary); font-size: 1.4rem; margin: 6px 0;">بوابة الدخول والاعتماد الأمني للجمعيتين</h2>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">
+                    لا يُسمح بالدخول لأي قسم إلا عبر الكود الرسمي المصرح به من المشرف العام لكل جمعية على حدة.
+                </p>
+            </div>
+
+            <!-- Step 1: Organization Choice -->
+            <div style="margin-bottom: 16px;">
+                <label style="font-weight: 800; font-size: 0.85rem; color: var(--text); display: block; margin-bottom: 8px;">
+                    1. اختر الجمعية التابع لها:
+                </label>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="gate-org-btn active hael" id="gateOrgHael" onclick="selectGateOrg('HAEL')">
+                        🟢 جمعية هائل سعيد أنعم
+                    </button>
+                    <button type="button" class="gate-org-btn muadh" id="gateOrgMuadh" onclick="selectGateOrg('MUADH')">
+                        🔵 جمعية معاذ الحروي
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Role Level Choice -->
+            <div style="margin-bottom: 16px;">
+                <label style="font-weight: 800; font-size: 0.85rem; color: var(--text); display: block; margin-bottom: 8px;">
+                    2. اختر المستوى الإداري:
+                </label>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <button type="button" class="gate-role-btn active" id="gateRoleSupervisor" onclick="selectGateRole('SUPERVISOR')">
+                        🏛️ مشرف عام
+                    </button>
+                    <button type="button" class="gate-role-btn" id="gateRoleTeacher" onclick="selectGateRole('TEACHER')">
+                        👨‍🏫 معلم / محفظ
+                    </button>
+                    <button type="button" class="gate-role-btn" id="gateRoleParent" onclick="selectGateRole('PARENT')">
+                        👨‍👩‍👧‍👦 ولي أمر طالب
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Access Code Input -->
+            <div class="form-group">
+                <label style="font-weight: 800; font-size: 0.88rem; color: var(--text);">
+                    3. أدخل كود الدخول والاعتماد الأمني الممنوح من المشرف العام 🔑:
+                </label>
+                <input type="text" id="gateAccessCodeInput" class="form-control" style="font-size: 1.1rem; letter-spacing: 1px; font-weight: 700; text-align: center;" placeholder="أدخل الكود هنا (مثال: SUPER-HSA-777)" onkeydown="if(event.key === 'Enter') verifyAndLogin()">
+            </div>
+
+            <!-- Official Authorized Credentials Directory -->
+            <div style="background: var(--bg); border: 1px dashed var(--border); border-radius: 10px; padding: 10px 12px; margin: 12px 0;">
+                <div style="font-size: 0.78rem; font-weight: 800; color: var(--text-secondary); margin-bottom: 6px;">
+                    📜 دليل الأكواد الرسمية المعتمدة للإشراف والتعليم والمتابعة:
+                </div>
+                <div id="gateQuickCodesContainer" style="display: flex; gap: 6px; flex-wrap: wrap;">
+                    <!-- Rendered dynamically depending on selected association -->
+                </div>
+            </div>
+
+            <!-- Security Alert Box for failed attempts -->
+            <div id="gateSecurityAlert" class="security-alert-box"></div>
+
+            <div style="margin-top: 20px;">
+                <button type="button" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1.05rem; font-weight: 800;" onclick="verifyAndLogin()">
+                    🔐 تحقق وسجّل الدخول إلى الجمعية
+                </button>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 0.78rem; color: var(--text-secondary);">
+                <span>🛡️ تدقيق أمان المعلومات نشط</span>
+                <span>🔒 عزل تام: لا يمكن لكود جمعية فتح الأخرى</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🛡️ Modal: Security Audit Log -->
+    <div id="modalSecurityAudit" class="modal-overlay">
+        <div class="modal-box" style="max-width: 640px;">
+            <div class="modal-header">
+                <h3 style="color: var(--primary);">🛡️ سجل تدقيق أمان المعلومات والرقابة الرقمية</h3>
+                <button class="modal-close-btn" onclick="closeSecurityAuditModal()">&times;</button>
+            </div>
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 14px; font-size: 0.85rem; line-height: 1.6;">
+                <strong>سجل الرقابة الأمنية المشددة:</strong> يتم تسجيل وتدقيق جميع محاولات الدخول، التحقق من الأكواد، محاولات الاختراق، ومنع تداخل البيانات بين جمعية هائل سعيد أنعم وجمعية معاذ الحروي.
+            </div>
+            <div style="max-height: 320px; overflow-y: auto; border: 1px solid var(--border); border-radius: 10px;">
+                <table class="audit-table">
+                    <thead>
+                        <tr>
+                            <th>التوقيت</th>
+                            <th>الجمعية</th>
+                            <th>المستوى</th>
+                            <th>الكود</th>
+                            <th>الحالة والتدقيق</th>
+                        </tr>
+                    </thead>
+                    <tbody id="auditTableBody">
+                        <!-- Populated by app.js -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button class="btn btn-whatsapp" onclick="shareSecurityAuditWhatsApp()">📲 إرسال التقرير الأمني للمشرف العام</button>
+                <button class="btn btn-outline" onclick="closeSecurityAuditModal()">إغلاق</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Install PWA Banner -->
     <div id="installBanner" class="install-banner" style="display: none;">
@@ -498,16 +1025,53 @@
     <!-- Main App Container -->
     <main class="container">
         
+        <!-- Association & Department Administration Bar with Full Data Isolation -->
+        <div class="org-selector-bar">
+            <div class="org-switch-group">
+                <span class="org-label">🏛️ الجمعية الحالية:</span>
+                <button class="org-btn active hael" id="orgBtnHael" onclick="requestSwitchOrganization('HAEL')">
+                    🟢 جمعية هائل سعيد أنعم
+                </button>
+                <button class="org-btn muadh" id="orgBtnMuadh" onclick="requestSwitchOrganization('MUADH')">
+                    🔵 جمعية معاذ الحروي
+                </button>
+                <span class="isolation-badge">🔒 نظام العزل التام للبيانات مفعل</span>
+            </div>
+            <div class="role-switch-group">
+                <span class="role-label">👤 المستوى الإداري:</span>
+                <select id="roleSelector" class="role-select" onchange="onRoleChange(this.value)">
+                    <option value="SUPERVISOR">🏛️ مشرف عام (إدارة الجمعية الشاملة)</option>
+                    <option value="TEACHER" selected>👨‍🏫 معلم / محفظ (الحلقات والتسميع)</option>
+                    <option value="PARENT">👨‍👩‍👧‍👦 ولي أمر الطالب (متابعة الأبناء)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Active Organization Banner -->
+        <div id="orgBannerNotice" style="background: linear-gradient(135deg, #0F5132, #18241D); color: #ffffff; padding: 12px 18px; border-radius: 12px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-right: 5px solid var(--gold);">
+            <div>
+                <strong id="orgBannerName" style="font-size: 1.05rem;">جمعية هائل سعيد أنعم لتحفيظ القرآن الكريم</strong>
+                <p id="orgBannerDesc" style="font-size: 0.82rem; color: var(--primary-container); margin: 2px 0 0 0;">كافة بيانات الحلقات والمعلمين والطلاب معزولة تماماً ومحمية من التداخل مع أي جمعية أخرى.</p>
+            </div>
+            <div style="font-size: 0.85rem; background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px;">
+                الفرع: <span id="orgBannerLocation">تعز - اليمن</span>
+            </div>
+        </div>
+
         <!-- Navigation Tabs -->
         <nav class="tabs">
-            <button class="tab-btn active" onclick="switchTab('teacherTab')">👨‍🏫 لوحة المعلم</button>
-            <button class="tab-btn" onclick="switchTab('halaqatTab')">🕌 الحلقات القرآنية</button>
-            <button class="tab-btn" onclick="switchTab('quickAttTab')">⚡ التحضير السريع</button>
-            <button class="tab-btn" onclick="switchTab('parentTab')">👨‍👩‍👧‍👦 بوابة ولي الأمر</button>
-            <button class="tab-btn" onclick="switchTab('studentTab')">🌟 مساحة الطالب</button>
-            <button class="tab-btn" onclick="switchTab('messagesTab')">💬 الرسائل والتنبيهات</button>
-            <button class="tab-btn" onclick="switchTab('toolsTab')">🛠️ الأدوات والشهادات</button>
-            <button class="tab-btn" onclick="switchTab('devTab')">📱 المطور والنشر</button>
+            <button class="tab-btn active" id="tabBtnTeacher" onclick="switchTab('teacherTab')">👨‍🏫 لوحة المعلم</button>
+            <button class="tab-btn" id="tabBtnSupervisor" onclick="switchTab('supervisorTab')">🏛️ الإشراف العام</button>
+            <button class="tab-btn" id="tabBtnGirls" onclick="switchTab('girlsTab')" style="color: #C2185B;">👧 قسم حلقات البنات</button>
+            <button class="tab-btn" id="tabBtnReaders" onclick="switchTab('readersLevelTab')" style="color: #0d6efd; font-weight: 700;">🎙️ مستوى الطالب والقُرّاء</button>
+            <button class="tab-btn" id="tabBtnQiraat" onclick="switchTab('qiraatTab')" style="color: #B8860B; font-weight: 700;">📜 القراءات العشر والمذاهب</button>
+            <button class="tab-btn" id="tabBtnHalaqat" onclick="switchTab('halaqatTab')">🕌 الحلقات القرآنية</button>
+            <button class="tab-btn" id="tabBtnQuickAtt" onclick="switchTab('quickAttTab')">⚡ التحضير السريع</button>
+            <button class="tab-btn" id="tabBtnParent" onclick="switchTab('parentTab')">👨‍👩‍👧‍👦 بوابة ولي الأمر</button>
+            <button class="tab-btn" id="tabBtnStudent" onclick="switchTab('studentTab')">🌟 مساحة الطالب</button>
+            <button class="tab-btn" id="tabBtnMessages" onclick="switchTab('messagesTab')">💬 الرسائل والتنبيهات</button>
+            <button class="tab-btn" id="tabBtnTools" onclick="switchTab('toolsTab')">🛠️ الأدوات والشهادات</button>
+            <button class="tab-btn" id="tabBtnDev" onclick="switchTab('devTab')">📱 المطور والنشر</button>
         </nav>
 
         <!-- 1. Teacher Tab -->
@@ -521,6 +1085,287 @@
 
             <div id="studentsList" class="students-grid">
                 <!-- Loaded from app.js -->
+            </div>
+        </section>
+
+        <!-- Girls Administration Tab -->
+        <section id="girlsTab" class="tab-content">
+            <div class="portal-card" style="border-top: 4px solid #C2185B;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="background: #FCE4EC; color: #C2185B; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem;">🌸</div>
+                        <div>
+                            <h2 style="color: #880E4F; margin: 0; font-size: 1.4rem;">الإدارة العامة لحلقات البنات</h2>
+                            <p style="color: var(--text-secondary); margin: 4px 0 0 0; font-size: 0.9rem;">لوحة المشرفات لإدارة الحلقات والمحفظات وسجلات الطالبات (فصل تام عن أقسام البنين 🔒)</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="btn btn-primary" style="background: #C2185B;" onclick="openAddGirlsCircleModal()">➕ إضافة حلقة فتيات</button>
+                        <button class="btn btn-outline" style="border-color: #C2185B; color: #C2185B;" onclick="openAddGirlStudentModal()">👩‍🎓 تسجيل طالبة جديدة</button>
+                    </div>
+                </div>
+
+                <!-- Stats summary strictly for girls -->
+                <div id="girlsStatsContainer" style="display: flex; gap: 10px; margin: 18px 0; flex-wrap: wrap;"></div>
+
+                <!-- Girls Sub-Tabs -->
+                <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+                    <button class="filter-chip active" id="chipGirlsCircles" onclick="switchGirlsSubTab('circles')">حلقات البنات والمحفظات 🕌</button>
+                    <button class="filter-chip" id="chipGirlsStudents" onclick="switchGirlsSubTab('students')">دليل الطالبات والتسميع 📖</button>
+                    <button class="filter-chip" id="chipGirlsAtt" onclick="switchGirlsSubTab('attendance')">التحضير السريع ⚡</button>
+                </div>
+
+                <!-- Search and Circle Filters specifically for Girls -->
+                <div id="girlsFilterBar" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 16px;">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                        <input type="text" id="girlsSearchInput" class="search-input" style="flex: 1; min-width: 220px;" placeholder="ابحثي باسم الطالبة أو كود المتابعة..." oninput="onGirlsSearchChange(this.value)">
+                        <div id="girlsCircleChips" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
+                    </div>
+                </div>
+
+                <div id="girlsContentArea">
+                    <!-- Rendered by app.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- General Supervisor Tab -->
+        <section id="supervisorTab" class="tab-content">
+            <div class="portal-card" style="border-top: 4px solid var(--gold);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="background: var(--gold-container); color: #664D03; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 2px solid var(--gold);">🏛️</div>
+                        <div>
+                            <h2 style="color: var(--primary-dark); margin: 0; font-size: 1.4rem;">لوحة الإشراف العام والمتابعة العليا</h2>
+                            <p style="color: var(--text-secondary); margin: 4px 0 0 0; font-size: 0.9rem;">
+                                إشراف إداري شامل على <span id="supervisorOrgNameText">جمعية هائل سعيد أنعم</span> (عزل بيانات كامل 🔒)
+                            </p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="openSupervisorAddCircleModal()">➕ إضافة حلقة للجمعية</button>
+                        <button class="btn btn-whatsapp" style="margin-top:0;" onclick="shareSupervisorSummaryWhatsApp()">📲 تقرير مجلس الإدارة</button>
+                    </div>
+                </div>
+
+                <!-- Supervisor KPIs -->
+                <div id="supervisorStatsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 18px 0;">
+                    <!-- Rendered by app.js -->
+                </div>
+
+                <!-- Supervisor Sections: Circles & Teachers Roster -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0 10px 0; flex-wrap: wrap; gap: 8px;">
+                    <h3 style="font-size: 1.15rem; color: var(--primary); margin: 0;">📋 كشف الحلقات والمشرفين والمعلمين المعتمدين</h3>
+                    <span class="isolation-badge" id="supervisorIsolationStatus">🔒 جمعية هائل سعيد أنعم</span>
+                </div>
+                <div id="supervisorCirclesTable" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;">
+                    <!-- Rendered by app.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Readers Level & Proficiency Assessment Tab -->
+        <section id="readersLevelTab" class="tab-content">
+            <div class="portal-card" style="border-top: 4px solid #0d6efd;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <div style="background: #E7F1FF; color: #0d6efd; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; border: 2px solid #0d6efd;">🎙️</div>
+                        <div>
+                            <h2 style="color: #084298; margin: 0; font-size: 1.4rem;">ميزة القُرّاء لمعرفة وقياس مستوى الطالب</h2>
+                            <p style="color: var(--text-secondary); margin: 4px 0 0 0; font-size: 0.9rem;">أداة تقييم مستوى الإتقان القرآني ومضاهاة التلاوة بمدارس كبار القُرّاء وإصدار بطاقة المستوى</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <button class="btn btn-whatsapp" style="margin-top:0;" onclick="exportStudentLevelWhatsApp()">📲 إرسال بطاقة المستوى لولي الأمر</button>
+                    </div>
+                </div>
+
+                <!-- Student Selection Bar -->
+                <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin: 18px 0; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+                    <label style="font-weight: 800; font-size: 0.95rem; color: var(--text);">اختر الطالب للتقييم ومعرفة مستواه:</label>
+                    <select id="levelStudentSelect" class="form-control" style="flex: 1; min-width: 240px;" onchange="onStudentLevelSelect(this.value)">
+                        <!-- Populated by app.js -->
+                    </select>
+                </div>
+
+                <!-- Student Level Meter Result -->
+                <div class="level-meter-box">
+                    <div style="font-size: 0.9rem; color: var(--gold-light);">المستوى القرآني المستحق للطالب: <strong id="levelSelectedStudentName">---</strong></div>
+                    <div id="levelBadgeDisplay" class="level-badge-large">المستوى المتقدم / المتقن 🥇</div>
+                    <div style="font-size: 2.2rem; font-weight: 800; margin: 8px 0; color: #ffffff;" id="levelTotalScoreText">88%</div>
+                    <p id="levelDescText" style="font-size: 0.9rem; max-width: 700px; margin: 0 auto; color: var(--primary-container);">
+                        طالب متقن لأحكام التجويد والمدود ومخارج وصفات الحروف، يحاكي مدرسة الترتيل والتحقيق لكبار القراء.
+                    </p>
+                </div>
+
+                <!-- 4 Interactive Rubric Sliders -->
+                <h3 style="font-size: 1.1rem; color: var(--primary-dark); margin-top: 20px;">📊 معايير قياس وضبط التلاوة (معايير كبار القراء):</h3>
+                <div class="rubric-grid">
+                    <div class="rubric-item">
+                        <div class="rubric-header">
+                            <span class="rubric-title">1. الحفظ والاستحضار والطلاقة</span>
+                            <span class="rubric-value" id="valRubricMem">90%</span>
+                        </div>
+                        <input type="range" class="rubric-slider" id="sliderRubricMem" min="0" max="100" value="90" oninput="updateRubricScore()">
+                        <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">دقة الحفظ، قلة التردد، وخلوه من اللحن الجلي.</div>
+                    </div>
+                    <div class="rubric-item">
+                        <div class="rubric-header">
+                            <span class="rubric-title">2. أحكام التجويد والمدود والغنن</span>
+                            <span class="rubric-value" id="valRubricTaj">85%</span>
+                        </div>
+                        <input type="range" class="rubric-slider" id="sliderRubricTaj" min="0" max="100" value="85" oninput="updateRubricScore()">
+                        <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">ضبط أزمنة المدود، أحكام النون والميم والتفخيم.</div>
+                    </div>
+                    <div class="rubric-item">
+                        <div class="rubric-header">
+                            <span class="rubric-title">3. مخارج وصفات الحروف</span>
+                            <span class="rubric-value" id="valRubricMakh">90%</span>
+                        </div>
+                        <input type="range" class="rubric-slider" id="sliderRubricMakh" min="0" max="100" value="90" oninput="updateRubricScore()">
+                        <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">سلامة مخارج الحلق واللسان والشفتين وصفات الهمس.</div>
+                    </div>
+                    <div class="rubric-item">
+                        <div class="rubric-header">
+                            <span class="rubric-title">4. الوقف والابتداء وحسن الترتيل</span>
+                            <span class="rubric-value" id="valRubricWaqf">88%</span>
+                        </div>
+                        <input type="range" class="rubric-slider" id="sliderRubricWaqf" min="0" max="100" value="88" oninput="updateRubricScore()">
+                        <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">الوقف التام والكافي ومراعاة المعنى والخشوع.</div>
+                    </div>
+                </div>
+
+                <!-- Customized Recommendations Box -->
+                <div style="background: #FFF8E1; border: 1px solid #FFE082; border-radius: 12px; padding: 14px; margin: 16px 0;">
+                    <div style="font-weight: 800; color: #795548; margin-bottom: 6px;">💡 التوجيهات القرآنيّة وخطة التحسين الموصى بها:</div>
+                    <div id="levelRecommendationsText" style="font-size: 0.88rem; color: #4E342E; line-height: 1.6;">
+                        يُوصى بالاستماع اليومي لمصحف التحقيق للشيخ الحصري لترسيخ مخارج الحروف، ومراجعة أزمنة المدود المنفصلة والمتصلة مع المعلم في الحلقة.
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="saveStudentLevelAssessment()">💾 حفظ التقييم في ملف الطالب</button>
+                    <button class="btn btn-whatsapp" style="margin-top:0;" onclick="exportStudentLevelWhatsApp()">📲 مشاركة بطاقة المستوى عبر واتساب</button>
+                </div>
+
+                <!-- Reciters Benchmark Station -->
+                <div style="border-top: 2px dashed var(--border); padding-top: 20px; margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;">
+                        <div>
+                            <h3 style="color: var(--primary); margin: 0; font-size: 1.2rem;">🎧 محطة الاستماع لمدارس كبار القُرّاء (المعيار الذهبي للتلاوة)</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 2px 0 0 0;">استمع وقارن تلاوة الطالب بأداء أئمة التلاوة والتحقيق والترتيل:</p>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px;">
+                        <!-- Reciter 1: Al-Hussary -->
+                        <div class="reciter-card">
+                            <div class="reciter-header">
+                                <div class="reciter-avatar">🕌</div>
+                                <div>
+                                    <h4 style="margin: 0; font-size: 1rem;">الشيخ محمود خليل الحصري</h4>
+                                    <span style="font-size: 0.78rem; color: var(--text-secondary);">مدرسة التحقيق والضبط التجويدي الفائق</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                                المرجع الأكبر في إتقان مخارج وصفات الحروف ورسم أزمنة الغنن والمدود.
+                            </p>
+                            <div class="audio-player-bar">
+                                <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.82rem;" onclick="playReciterAudio('hussary', 'https://server13.mp3quran.net/husr/001.mp3')">▶️ استماع (الفاتحة)</button>
+                                <span style="font-size: 0.75rem; color: var(--text-secondary);">مصحف الترتيل والتحقيق</span>
+                            </div>
+                        </div>
+
+                        <!-- Reciter 2: Al-Minshawi -->
+                        <div class="reciter-card">
+                            <div class="reciter-header">
+                                <div class="reciter-avatar">🌿</div>
+                                <div>
+                                    <h4 style="margin: 0; font-size: 1rem;">الشيخ محمد صديق المنشاوي</h4>
+                                    <span style="font-size: 0.78rem; color: var(--text-secondary);">مدرسة الخشوع الشجي ورقة النبر</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                                النغم القرآني الصادق، العذوبة الفائقة، وتجسيد معاني الآيات في الوقف والابتداء.
+                            </p>
+                            <div class="audio-player-bar">
+                                <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.82rem;" onclick="playReciterAudio('minshawi', 'https://server10.mp3quran.net/minsh/001.mp3')">▶️ استماع (الفاتحة)</button>
+                                <span style="font-size: 0.75rem; color: var(--text-secondary);">مصحف الترتيل الخاشع</span>
+                            </div>
+                        </div>
+
+                        <!-- Reciter 3: Abdulbasit -->
+                        <div class="reciter-card">
+                            <div class="reciter-header">
+                                <div class="reciter-avatar">⭐</div>
+                                <div>
+                                    <h4 style="margin: 0; font-size: 1rem;">الشيخ عبد الباسط عبد الصمد</h4>
+                                    <span style="font-size: 0.78rem; color: var(--text-secondary);">مدرسة النفس الطويل وفصاحة اللسان</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                                قوة الصوت والجهر بالحق، والرخاوة السليمة في الحروف المفخمة والمرققة.
+                            </p>
+                            <div class="audio-player-bar">
+                                <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.82rem;" onclick="playReciterAudio('abdulbasit', 'https://server7.mp3quran.net/basit/001.mp3')">▶️ استماع (الفاتحة)</button>
+                                <span style="font-size: 0.75rem; color: var(--text-secondary);">المصحف المرتل</span>
+                            </div>
+                        </div>
+
+                        <!-- Reciter 4: Al-Hudhaify -->
+                        <div class="reciter-card">
+                            <div class="reciter-header">
+                                <div class="reciter-avatar">🕋</div>
+                                <div>
+                                    <h4 style="margin: 0; font-size: 1rem;">الشيخ علي بن عبد الرحمن الحذيفي</h4>
+                                    <span style="font-size: 0.78rem; color: var(--text-secondary);">مدرسة الحرم النبوي والوقف والابتداء</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                                الرسوخ التام والتأني والترتيل الرزين والضبط المحكم لأوجه الرواية.
+                            </p>
+                            <div class="audio-player-bar">
+                                <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.82rem;" onclick="playReciterAudio('hudhaify', 'https://server9.mp3quran.net/hthfi/001.mp3')">▶️ استماع (الفاتحة)</button>
+                                <span style="font-size: 0.75rem; color: var(--text-secondary);">مرتل المسجد النبوي</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Ten Quranic Readings & Islamic Madhabs Tab -->
+        <section id="qiraatTab" class="tab-content">
+            <div class="portal-card" style="border-top: 4px solid var(--gold);">
+                <!-- Hero Header -->
+                <div class="qiraat-hero">
+                    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 12px; flex-wrap: wrap;">
+                        <span style="font-size: 2.2rem;">📜</span>
+                        <div>
+                            <h2 style="margin: 0; font-size: 1.5rem; color: var(--gold-light);">موسوعة القراءات العشر المتواترة لجميع المذاهب الإسلامية</h2>
+                            <p style="margin: 4px 0 0 0; font-size: 0.95rem; color: #D1E7DD;">
+                                إجماع الأمة الإسلامية بمذاهبها الفقهية على تواتر القراءات العشر، وأثرها في التشريع وبلاغة القرآن الكريم
+                            </p>
+                        </div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 16px; font-size: 0.86rem; line-height: 1.6;">
+                        ✨ اتفقت كلمة أئمة المسلمين وفقهاء المذاهب الأربعة (الحنفي، المالكي، الشافعي، الحنبلي) وسائر أهل السنة والجماعة على أن القراءات العشر متواترة مقطوع بصحتها عن رسول الله ﷺ، وأن اختلافها اختلاف تنوع وتيسير وإعجاز فقهي ولغوي يعضد بعضه بعضاً.
+                    </div>
+                </div>
+
+                <!-- Sub-filters inside Qiraat -->
+                <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+                    <button class="filter-chip active" id="chipQiraatImams" onclick="switchQiraatSubTab('imams')">القراء العشرة ورواتهم العشرين 🕌</button>
+                    <button class="filter-chip" id="chipQiraatFiqh" onclick="switchQiraatSubTab('fiqh')">أثر القراءات في المذاهب الفقهية ⚖️</button>
+                    <button class="filter-chip" id="chipQiraatRules" onclick="switchQiraatSubTab('rules')">مقارنة الأصول والفرش 📖</button>
+                    <button class="filter-chip" id="chipQiraatAudio" onclick="switchQiraatSubTab('audio')">الاستماع بالروايات 🎧</button>
+                    <button class="filter-chip" id="chipQiraatQuiz" onclick="switchQiraatSubTab('quiz')">اختبار علم القراءات 🏆</button>
+                </div>
+
+                <!-- Area rendered by app.js -->
+                <div id="qiraatContentArea">
+                    <!-- Populated dynamically -->
+                </div>
             </div>
         </section>
 
@@ -669,6 +1514,270 @@
     <!-- Toast Notification -->
     <div id="toast" class="toast"></div>
 
+    <!-- Modal 1: Add Girls Circle & Assign Teacher -->
+    <div id="modalAddGirlsCircle" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 style="color: #880E4F;">➕ إضافة حلقة فتيات جديدة وتعيين المحفظة 🕌🌸</h3>
+                <button class="modal-close-btn" onclick="closeAddGirlsCircleModal()">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>اسم حلقة الفتيات (مثال: حلقة أم المؤمنين عائشة)</label>
+                <input type="text" id="inputNewCircleName" class="form-control" placeholder="اكتبي اسم الحلقة...">
+            </div>
+            <div class="form-group">
+                <label>اسم المحفظة / المعلمة المشرفة 👩‍🏫</label>
+                <input type="text" id="inputNewTeacherName" class="form-control" placeholder="اسم المحفظة المعتمدة...">
+            </div>
+            <div class="form-group">
+                <label>رقم هاتف وتواصل المحفظة 📞</label>
+                <input type="text" id="inputNewTeacherPhone" class="form-control" placeholder="05XXXXXXXX" value="0550000000">
+            </div>
+            <div class="form-group">
+                <label>موعد وتوقيت الحلقة ⏰</label>
+                <input type="text" id="inputNewSchedule" class="form-control" placeholder="مثال: العصر (4:00 - 5:30 م)" value="العصر (4:00 - 5:30 م)">
+            </div>
+            <div class="form-group">
+                <label>المقر أو القاعة التعليمية 📍</label>
+                <input type="text" id="inputNewLocation" class="form-control" placeholder="مثال: معهد البيان - قاعة الهدى" value="معهد البيان - قاعة الهدى">
+            </div>
+            <div class="form-group">
+                <label>الهدف القرآني المعتمد للحلقة 🎯</label>
+                <input type="text" id="inputNewGoal" class="form-control" placeholder="مثال: حفظ وتجويد القرآن الكريم" value="حفظ وتجويد القرآن الكريم">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" style="background: #C2185B;" onclick="saveNewGirlsCircle()">حفظ وتعيين المحفظة ✅</button>
+                <button class="btn btn-outline" onclick="closeAddGirlsCircleModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Assign / Reassign Teacher -->
+    <div id="modalAssignTeacher" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 style="color: #880E4F;">✏️ تعيين / تغيير المحفظة المشرفة 👩‍🏫</h3>
+                <button class="modal-close-btn" onclick="closeAssignTeacherModal()">&times;</button>
+            </div>
+            <div style="background: #FCE4EC; color: #880E4F; padding: 10px 14px; border-radius: 10px; font-weight: 700; margin-bottom: 14px;">
+                حلقة: <span id="assignCircleNameText"></span>
+            </div>
+            <input type="hidden" id="assignCircleNameHidden">
+            <div class="form-group">
+                <label>اسم المحفظة المشرفة الجديدة</label>
+                <input type="text" id="inputAssignTeacherName" class="form-control" placeholder="اسم الأستاذة المحفظة...">
+            </div>
+            <div class="form-group">
+                <label>رقم هاتف المحفظة</label>
+                <input type="text" id="inputAssignTeacherPhone" class="form-control" placeholder="05XXXXXXXX">
+            </div>
+            <div class="form-group">
+                <label>موعد انعقاد الحلقة</label>
+                <input type="text" id="inputAssignSchedule" class="form-control" placeholder="توقيت الحلقة...">
+            </div>
+            <div class="form-group">
+                <label>المقر والقاعة</label>
+                <input type="text" id="inputAssignLocation" class="form-control" placeholder="مكان انعقاد الحلقة...">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" style="background: #C2185B;" onclick="saveAssignedTeacher()">حفظ التعيين بنجاح ✅</button>
+                <button class="btn btn-outline" onclick="closeAssignTeacherModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Add Female Student -->
+    <div id="modalAddGirlStudent" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 style="color: #880E4F;">👩‍🎓 تسجيل طالبة جديدة في قسم البنات 🌸</h3>
+                <button class="modal-close-btn" onclick="closeAddGirlStudentModal()">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>اسم الطالبة الثلاثي</label>
+                <input type="text" id="inputGirlStudentName" class="form-control" placeholder="اسم الطالبة الكامل...">
+            </div>
+            <div class="form-group">
+                <label>حلقة الفتيات التابعة لها 🕌</label>
+                <select id="selectGirlStudentCircle" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label>رقم هاتف ولية الأمر / ولي الأمر 📱</label>
+                <input type="text" id="inputGirlStudentPhone" class="form-control" placeholder="05XXXXXXXX" value="0550000000">
+            </div>
+            <div class="form-group">
+                <label>كود المتابعة (يستخدمه ولي الأمر للدخول)</label>
+                <input type="text" id="inputGirlStudentCode" class="form-control" placeholder="مثال: QRN-G105">
+            </div>
+            <div class="form-group">
+                <label>الجزء القرآني الحالي</label>
+                <input type="number" id="inputGirlStudentJuz" class="form-control" min="1" max="30" value="30">
+            </div>
+            <div class="form-group">
+                <label>الهدف القرآني 🎯</label>
+                <input type="text" id="inputGirlStudentGoal" class="form-control" placeholder="مثال: ختم القرآن الكريم كاملاً" value="ختم القرآن الكريم كاملاً">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" style="background: #C2185B;" onclick="saveNewGirlStudent()">تسجيل الطالبة ✅</button>
+                <button class="btn btn-outline" onclick="closeAddGirlStudentModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Edit Female Student -->
+    <div id="modalEditGirlStudent" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 style="color: #880E4F;">✏️ تعديل بيانات الطالبة 👧</h3>
+                <button class="modal-close-btn" onclick="closeEditGirlStudentModal()">&times;</button>
+            </div>
+            <input type="hidden" id="inputEditGirlStudentId">
+            <div class="form-group">
+                <label>اسم الطالبة</label>
+                <input type="text" id="inputEditGirlStudentName" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>حلقة الفتيات</label>
+                <select id="selectEditGirlStudentCircle" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <label>رقم هاتف ولية الأمر</label>
+                <input type="text" id="inputEditGirlStudentPhone" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>الجزء القرآني</label>
+                <input type="number" id="inputEditGirlStudentJuz" class="form-control" min="1" max="30">
+            </div>
+            <div class="form-group">
+                <label>الهدف القرآني</label>
+                <input type="text" id="inputEditGirlStudentGoal" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" style="background: #C2185B;" onclick="updateGirlStudent()">حفظ التعديلات ✅</button>
+                <button class="btn btn-outline" style="border-color: #D32F2F; color: #D32F2F;" onclick="deleteCurrentGirlStudent()">حذف الطالبة 🗑️</button>
+                <button class="btn btn-outline" onclick="closeEditGirlStudentModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 5: Record Girls Recitation -->
+    <div id="modalGirlsRecitation" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 style="color: #880E4F;">📖 تسجيل تسميع قرآني لطالبة 🌸</h3>
+                <button class="modal-close-btn" onclick="closeGirlsRecitationModal()">&times;</button>
+            </div>
+            <div style="background: #FCE4EC; color: #880E4F; padding: 10px 14px; border-radius: 10px; font-weight: 700; margin-bottom: 14px;">
+                الطالبة: <span id="recitationGirlStudentName"></span>
+            </div>
+            <input type="hidden" id="recitationGirlStudentId">
+            <div class="form-group">
+                <label>نوع التسميع</label>
+                <select id="selectRecitationType" class="form-control">
+                    <option value="حفظ جديد">حفظ جديد</option>
+                    <option value="مراجعة صغرى">مراجعة صغرى</option>
+                    <option value="مراجعة كبرى">مراجعة كبرى</option>
+                    <option value="تثبيت وإتقان">تثبيت وإتقان</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>اسم السورة الكريمة</label>
+                <input type="text" id="inputRecitationSurah" class="form-control" placeholder="مثال: الملك، النبأ، البقرة" value="الملك">
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>من آية</label>
+                    <input type="number" id="inputRecitationFromAyah" class="form-control" value="1" min="1">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>إلى آية</label>
+                    <input type="number" id="inputRecitationToAyah" class="form-control" value="15" min="1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>التقدير العام</label>
+                <select id="selectRecitationRating" class="form-control">
+                    <option value="ممتاز 🌟">ممتاز 🌟 (إتقان تام وتجويد سليم)</option>
+                    <option value="جيد جداً ⭐">جيد جداً ⭐</option>
+                    <option value="جيد 👍">جيد 👍</option>
+                    <option value="مقبول">مقبول</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>اسم المحفظة المستمعة</label>
+                <input type="text" id="inputRecitationTeacher" class="form-control" value="الأستاذة مريم السعيد">
+            </div>
+            <div class="form-group">
+                <label>ملاحظات وتوجيهات المحفظة للطالبة</label>
+                <textarea id="inputRecitationNotes" class="form-control" rows="2" placeholder="ملاحظات حول المدود، مخارج الحروف، أو الثناء على الطالبة...">أداء متميز وتلاوة خاشعة ما شاء الله بارك الله فيها.</textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" style="background: #C2185B;" onclick="saveGirlsRecitation()">حفظ التسميع وإشعار ولي الأمر ✅</button>
+                <button class="btn btn-outline" onclick="closeGirlsRecitationModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 6: Circle Full Report -->
+    <div id="modalCircleReport" class="modal-overlay">
+        <div class="modal-box" style="max-width: 580px;">
+            <div class="modal-header">
+                <h3 style="color: #880E4F;">🌸 تقرير حلقة الفتيات الرسمي</h3>
+                <button class="modal-close-btn" onclick="closeCircleReportModal()">&times;</button>
+            </div>
+            <div id="circleReportContent" style="white-space: pre-wrap; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; font-size: 0.9rem; line-height: 1.6; max-height: 350px; overflow-y: auto;"></div>
+            <div class="modal-footer">
+                <button class="btn btn-whatsapp" onclick="shareCircleReportWhatsApp()">📲 إرسال عبر واتساب للمشرفة</button>
+                <button class="btn btn-outline" onclick="copyCircleReportText()">📋 نسخ التقرير</button>
+                <button class="btn btn-outline" onclick="closeCircleReportModal()">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Supervisor Add Circle -->
+    <div id="modalSupervisorAddCircle" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 style="color: var(--primary);">➕ إضافة حلقة جديدة وتعيين المعلم للجمعية 🏛️</h3>
+                <button class="modal-close-btn" onclick="closeSupervisorAddCircleModal()">&times;</button>
+            </div>
+            <div style="background: var(--primary-container); color: var(--primary-dark); padding: 10px 14px; border-radius: 10px; font-weight: 700; margin-bottom: 14px;">
+                الجمعية المستهدفة: <span id="modalSupervisorOrgName">جمعية هائل سعيد أنعم</span> (عزل البيانات 🔒)
+            </div>
+            <div class="form-group">
+                <label>اسم الحلقة القرآنية</label>
+                <input type="text" id="inputSupCircleName" class="form-control" placeholder="مثال: حلقة الإمام الجزري">
+            </div>
+            <div class="form-group">
+                <label>نوع الحلقة</label>
+                <select id="selectSupCircleGender" class="form-control">
+                    <option value="MALE">حلقة بنين 👦</option>
+                    <option value="FEMALE">حلقة فتيات 👧</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>اسم المعلم / المحفظ المعتمد</label>
+                <input type="text" id="inputSupTeacherName" class="form-control" placeholder="اسم الشيخ أو الأستاذة المحفظة...">
+            </div>
+            <div class="form-group">
+                <label>رقم هاتف وتواصل المعلم 📞</label>
+                <input type="text" id="inputSupTeacherPhone" class="form-control" placeholder="05XXXXXXXX" value="0500000000">
+            </div>
+            <div class="form-group">
+                <label>موعد وتوقيت الحلقة ⏰</label>
+                <input type="text" id="inputSupSchedule" class="form-control" placeholder="مثال: بين المغرب والعشاء" value="بين المغرب والعشاء">
+            </div>
+            <div class="form-group">
+                <label>المقر أو المسجد 📍</label>
+                <input type="text" id="inputSupLocation" class="form-control" placeholder="مثال: جامع الجمعية المركزي" value="جامع الجمعية المركزي">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="saveSupervisorNewCircle()">حفظ وتعيين الحلقة ✅</button>
+                <button class="btn btn-outline" onclick="closeSupervisorAddCircleModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
     <script>
         const ACTIVE_TAB_STORAGE_KEY = 'activeTab';
@@ -696,6 +1805,14 @@
 
             if (tabId === 'parentTab') {
                 searchParentPortal();
+            } else if (tabId === 'supervisorTab') {
+                if (window.renderSupervisorDashboard) renderSupervisorDashboard();
+            } else if (tabId === 'readersLevelTab') {
+                if (window.renderReadersLevelTab) renderReadersLevelTab();
+            } else if (tabId === 'qiraatTab') {
+                if (window.renderQiraatTab) renderQiraatTab();
+            } else if (tabId === 'girlsTab') {
+                if (window.renderGirlsAdmin) renderGirlsAdmin();
             } else if (tabId === 'halaqatTab') {
                 if (window.renderHalaqat) renderHalaqat();
             } else if (tabId === 'quickAttTab') {
@@ -706,7 +1823,7 @@
         function restoreActiveTab() {
             try {
                 const savedTab = localStorage.getItem(ACTIVE_TAB_STORAGE_KEY) || localStorage.getItem('active_tab');
-                const validTabs = ['teacherTab', 'halaqatTab', 'quickAttTab', 'parentTab', 'studentTab', 'messagesTab', 'toolsTab', 'devTab'];
+                const validTabs = ['teacherTab', 'supervisorTab', 'girlsTab', 'readersLevelTab', 'qiraatTab', 'halaqatTab', 'quickAttTab', 'parentTab', 'studentTab', 'messagesTab', 'toolsTab', 'devTab'];
                 if (savedTab && validTabs.includes(savedTab) && document.getElementById(savedTab)) {
                     switchTab(savedTab, false);
                 }

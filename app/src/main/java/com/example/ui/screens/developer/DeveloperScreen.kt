@@ -355,7 +355,7 @@ fun DeveloperScreen(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(imageVector = Icons.Default.Restore, contentDescription = null, tint = MaterialTheme.colorScheme.error)
                             Spacer(modifier = Modifier.width(12.dp))
-                            Text("إعادة تهيئة البيانات التجريبية (Reset Data)", color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.SemiBold)
+                            Text("إعادة تهيئة البيانات الرسمية (Reset Data)", color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.SemiBold)
                         }
                         Icon(imageVector = Icons.Default.ChevronLeft, contentDescription = null, tint = MaterialTheme.colorScheme.error)
                     }
@@ -468,7 +468,7 @@ fun DeveloperScreen(
             onDismissRequest = { showResetConfirmDialog = false },
             title = { Text("تأكيد إعادة التعيين", fontWeight = FontWeight.Bold) },
             text = {
-                Text("هل تريد استعادة البيانات التجريبية الافتراضية للحلقات والطلاب والتسميعات؟")
+                Text("هل تريد استعادة البيانات الرسمية الافتراضية للحلقات والطلاب والتسميعات؟")
             },
             confirmButton = {
                 Button(

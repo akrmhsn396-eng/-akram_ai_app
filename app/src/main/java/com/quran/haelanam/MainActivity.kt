@@ -1,7 +1,10 @@
 package com.quran.haelanam
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -9,9 +12,9 @@ import android.webkit.WebViewClient
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -27,13 +30,20 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             MaterialTheme {
-                Surface(
+                Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    AppWebView(url = LOCAL_URL) // استبدل الرابط برابط موقعك/سيرفرك بعد الرفع أو احتفظ بالأصول المحلية
+                    contentWindowInsets = WindowInsets.safeDrawing
+                ) { paddingValues ->
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues)
+                    ) {
+                        AppWebView(url = LOCAL_URL)
+                    }
                 }
             }
         }
@@ -54,6 +64,13 @@ fun AppWebView(url: String) {
         modifier = Modifier.fillMaxSize(),
         factory = { context ->
             WebView(context).apply {
+                // تجنب خطأ MESA rendernode في المحاكي بتهيئة نمط العرض البرمجي
+                try {
+                    setLayerType(View.LAYER_TYPE_SOFTWARE, null)
+                } catch (_: Throwable) {
+                    setLayerType(View.LAYER_TYPE_NONE, null)
+                }
+
                 webViewClient = object : WebViewClient() {
                     override fun onReceivedError(
                         view: WebView?,
@@ -66,6 +83,15 @@ fun AppWebView(url: String) {
                             view?.loadUrl(MainActivity.LOCAL_URL)
                         }
                     }
+
+                    // معالجة استقرار محرك الرندرة لمنع أي انهيار للواجهة
+                    override fun onRenderProcessGone(
+                        view: WebView?,
+                        detail: RenderProcessGoneDetail?
+                    ): Boolean {
+                        view?.loadUrl(MainActivity.LOCAL_URL)
+                        return true
+                    }
                 }
                 webChromeClient = WebChromeClient()
                 settings.apply {
@@ -74,9 +100,14 @@ fun AppWebView(url: String) {
                     databaseEnabled = true
                     allowFileAccess = true
                     allowContentAccess = true
+                    allowFileAccessFromFileURLs = true
+                    allowUniversalAccessFromFileURLs = true
                     cacheMode = WebSettings.LOAD_DEFAULT
                     useWideViewPort = true
                     loadWithOverviewMode = true
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+                    }
                 }
                 webViewInstance = this
                 loadUrl(url)

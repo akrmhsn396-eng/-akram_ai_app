@@ -48,9 +48,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
-                "حلقات هائل سعيد - إشعارات",
+                "منارة الجيل القرآني - إشعارات الحلقات",
                 NotificationManager.IMPORTANCE_DEFAULT
-            )
+            ).apply {
+                description = "إشعارات يومية لمتابعة إنجاز الحفظ والمراجعة والحضور لحلقات الجمعيتين"
+            }
             notificationManager.createNotificationChannel(channel)
         }
 

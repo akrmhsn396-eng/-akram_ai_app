@@ -17,6 +17,7 @@ import org.json.JSONObject
 enum class AppRole(val titleAr: String, val iconDesc: String) {
     TEACHER("لوحة المعلم", "إدارة الحفظ والتقييم ومتابعة الطلاب"),
     HALAQAT("الحلقات القرآنية", "إدارة وتوزيع الحلقات والمجموعات"),
+    GIRLS_ADMIN("حلقات البنات 👧", "لوحة المشرفات وإدارة المعلمات والطالبات بخصوصية تامة"),
     QUICK_ATTENDANCE("التحضير السريع", "رصد الحضور بنقرة واحدة لجميع الطلاب"),
     PARENT("بوابة ولي الأمر", "متابعة إنجاز الأبناء والتقارير المباشرة"),
     STUDENT("مساحة الطالب", "الختمة والنقاط والأوسمة والتحديات"),
@@ -56,6 +57,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     // Data streams
     val allStudents: StateFlow<List<Student>> = studentDao.getAllStudentsFlow()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val femaleStudents: StateFlow<List<Student>> = studentDao.getStudentsByGenderFlow(Gender.FEMALE)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val allCircles: StateFlow<List<String>> = studentDao.getCirclesFlow()
@@ -411,7 +415,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             attendanceDao.deleteAll()
             notificationDao.deleteAll()
             seedInitialData()
-            showSnackbar("تمت استعادة ضبط المصنع للبيانات التجريبية")
+            showSnackbar("تمت استعادة ضبط المصنع للبيانات الرسمية")
         }
     }
 

@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ui.components.AppTopBar
 import com.example.ui.screens.attendance.QuickAttendanceScreen
 import com.example.ui.screens.developer.DeveloperScreen
+import com.example.ui.screens.girls.GirlsAdminScreen
 import com.example.ui.screens.halaqat.HalaqatScreen
 import com.example.ui.screens.messages.MessagesScreen
 import com.example.ui.screens.parent.ParentScreen
@@ -121,6 +122,7 @@ fun QuranCirclesApp(
                 when (role) {
                     AppRole.TEACHER -> TeacherScreen(viewModel = viewModel)
                     AppRole.HALAQAT -> HalaqatScreen(viewModel = viewModel)
+                    AppRole.GIRLS_ADMIN -> GirlsAdminScreen(viewModel = viewModel)
                     AppRole.QUICK_ATTENDANCE -> QuickAttendanceScreen(viewModel = viewModel)
                     AppRole.PARENT -> ParentScreen(viewModel = viewModel)
                     AppRole.STUDENT -> StudentScreen(viewModel = viewModel)

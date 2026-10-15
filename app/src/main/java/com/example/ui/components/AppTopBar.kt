@@ -140,6 +140,7 @@ fun AppTopBar(
                 val icon = when (role) {
                     AppRole.TEACHER -> Icons.Default.School
                     AppRole.HALAQAT -> Icons.Default.Groups
+                    AppRole.GIRLS_ADMIN -> Icons.Default.Female
                     AppRole.QUICK_ATTENDANCE -> Icons.Default.FactCheck
                     AppRole.PARENT -> Icons.Default.FamilyRestroom
                     AppRole.STUDENT -> Icons.Default.EmojiEvents
