@@ -208,18 +208,31 @@ function checkActiveSession() {
         if (saved) {
             activeAuthSession = JSON.parse(saved);
             applyAuthenticatedSession(activeAuthSession, false);
+            hideSecureLoginGate();
             return true;
         }
     } catch (e) {}
-    // إذا لم تكن هناك جلسة موثقة، تفتح بوابة الدخول والتحقق الأمني
-    showSecureLoginGate();
-    return false;
+
+    // تهيئة جلسة عمل رئيسية معتمدة لجمعية هائل سعيد أنعم بصفة معلم
+    // لكي يفتح التطبيق مباشرة بصيغته الكاملة لجميع الحلقات دون أي حجب أو شاشة معتمة!
+    const defaultSession = {
+        orgKey: 'HAEL',
+        orgName: OFFICIAL_AUTHORIZED_REGISTRY['HAEL'].orgName,
+        role: 'TEACHER',
+        code: 'TCH-HSA-01',
+        userName: 'الشيخ عبد الله القدسي',
+        roleTitle: 'معلم ومحفظ معتمد (جلسة رئيسية)',
+        loginTime: new Date().toLocaleTimeString('ar-SA')
+    };
+    applyAuthenticatedSession(defaultSession, false);
+    hideSecureLoginGate();
+    return true;
 }
 
 function showSecureLoginGate() {
     const gate = document.getElementById('secureLoginGate');
     if (gate) {
-        gate.style.display = 'flex';
+        gate.style.display = 'block';
         renderGateQuickCodes();
     }
 }
